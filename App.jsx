@@ -1,17 +1,39 @@
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
-import ToDoList from './ToDoList';
-import ToDoForm from './ToDoForm';
+import React from 'react';
+import {StyleSheet, View, FlatList} from 'react-native';
+import {Header} from './Header';
+import {ToDoForm} from './ToDoForm';
+import {ToDoItem} from './ToDoItem';
 
-function App() {
-  const [tasks, setTasks] = useState(['Do laundry', 'Go to gym', 'Walk dog']);
+export default function App() {
+  const [tasks, setTasks] = React.useState(['task 1', 'task 2']);
+
+  const addTask = task => {
+    setTasks([...tasks, task]);
+  };
+
+  const deleteTask = index => {
+    const newTasks = [...tasks];
+    newTasks.splice(index, 1);
+    setTasks(newTasks);
+  };
 
   return (
-    <SafeAreaView>
-      <ToDoList tasks={tasks} />
-      <ToDoForm />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Header />
+      <ToDoForm addTask={addTask} />
+      <FlatList
+        data={tasks}
+        renderItem={({item, index}) => (
+          <ToDoItem item={item} index={index} deleteTask={deleteTask} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
