@@ -5,7 +5,7 @@ import {ToDoForm} from './ToDoForm';
 import {ToDoItem} from './ToDoItem';
 
 export default function App() {
-  const [tasks, setTasks] = React.useState(['task 1', 'task 2']);
+  const [tasks, setTasks] = React.useState(['task 1', 'task 2', 'task 3']);
 
   const addTask = task => {
     setTasks([...tasks, task]);
